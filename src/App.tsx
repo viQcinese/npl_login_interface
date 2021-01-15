@@ -2,10 +2,13 @@ import React, { useCallback, useState } from 'react';
 import { FiMail, FiLock } from 'react-icons/fi';
 import Validate from './utils/validate';
 
+import loadingGif from './assets/loading.gif';
+
 import Input from './components/Input';
 import Button from './components/Button';
 
-import { Container, Form, GlobalStyle } from './styles';
+import { Container, Form, LoadingSpinner, LoadingPlaceholder } from './styles';
+import GlobalStyle from './global';
 import mockLogin from './services/login';
 
 const App: React.FC = () => {
@@ -13,6 +16,7 @@ const App: React.FC = () => {
   const [emailError, setEmailError] = useState(false);
   const [password, setPassword] = useState('');
   const [passwordError, setPasswordError] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = useCallback(
     async event => {
@@ -25,7 +29,17 @@ const App: React.FC = () => {
       setPasswordError(!isPasswordValid);
 
       if (isEmailValid && isPasswordValid) {
-        await mockLogin({ email, password });
+        try {
+          setIsLoading(true);
+          await mockLogin({ email, password });
+
+          // To do - Redirect to Dashboard
+        } catch (err) {
+          // To do - Display invalid credentials error
+        }
+        setTimeout(() => {
+          setIsLoading(false);
+        }, 1000);
       }
     },
     [email, password],
@@ -59,6 +73,11 @@ const App: React.FC = () => {
           <Button>Submit</Button>
           <a href="#">Forget password</a>
         </Form>
+        {isLoading ? (
+          <LoadingSpinner src={loadingGif} alt="loading" />
+        ) : (
+          <LoadingPlaceholder />
+        )}
         <a href="#">Create an account</a>
       </Container>
     </>

@@ -10,7 +10,6 @@ export const Container = styled.div<IContainerProps>`
   border-radius: 16px;
   background: #eee;
   border: 1px solid #eee;
-  /* transition: all 0.2s; */
 
   svg {
     color: #999;

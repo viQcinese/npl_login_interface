@@ -1,21 +1,4 @@
-import styled, { createGlobalStyle } from 'styled-components';
-
-export const GlobalStyle = createGlobalStyle`
-  * {
-    box-sizing: border-box;
-    font-family: 'Roboto', sans-serif;
-  }
-
-  body {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin: 0;
-    height: 100vh;
-    background: #000;
-  }
-`;
+import styled from 'styled-components';
 
 export const Container = styled.div`
   display: flex;
@@ -25,11 +8,16 @@ export const Container = styled.div`
 
   background: #fff;
   padding: 24px;
+  padding-bottom: 40px;
 
   a {
     text-decoration: none;
     color: #666;
     font-size: 16px;
+  }
+
+  > a:last-child {
+    font-weight: bold;
   }
 `;
 
@@ -37,11 +25,12 @@ export const Form = styled.form`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 64px;
+  margin-bottom: 24px;
 
   h1 {
     color: #444;
     font-size: 32px;
+    margin-bottom: 40px;
   }
 
   a {
@@ -54,4 +43,16 @@ export const Form = styled.form`
     margin-bottom: 16px;
     margin-top: 8px;
   }
+`;
+
+export const LoadingSpinner = styled.img`
+  height: 54px;
+  width: 54px;
+  margin-bottom: 24px;
+`;
+
+export const LoadingPlaceholder = styled.div`
+  height: 54px;
+  width: 54px;
+  margin-bottom: 24px;
 `;
