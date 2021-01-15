@@ -1,4 +1,4 @@
-# NPL Chat Interface
+# NPL Login Interface
 
 Login interface, built with React and Typescript
 
