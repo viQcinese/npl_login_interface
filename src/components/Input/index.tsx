@@ -4,22 +4,15 @@ import { IconBaseProps } from 'react-icons';
 import { Container } from './styles';
 
 interface IInputProps extends InputHTMLAttributes<HTMLInputElement> {
-  name: string;
-  type: string;
-  placeholder: string;
-  icon?: ComponentType<IconBaseProps>;
+  isErrored: boolean;
+  icon: ComponentType<IconBaseProps>;
 }
 
-const Input: React.FC<IInputProps> = ({
-  name,
-  type,
-  placeholder,
-  icon: Icon,
-}) => {
+const Input: React.FC<IInputProps> = ({ icon: Icon, isErrored, ...rest }) => {
   return (
-    <Container>
+    <Container isErrored={isErrored}>
       {Icon && <Icon size={22} />}
-      <input name={name} type={type} placeholder={placeholder} />
+      <input {...rest} />
     </Container>
   );
 };

@@ -1,10 +1,16 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
-export const Container = styled.div`
+interface IContainerProps {
+  isErrored: boolean;
+}
+
+export const Container = styled.div<IContainerProps>`
   display: flex;
   padding: 8px 12px;
   border-radius: 16px;
   background: #eee;
+  border: 1px solid #eee;
+  /* transition: all 0.2s; */
 
   svg {
     color: #999;
@@ -13,6 +19,16 @@ export const Container = styled.div`
   &:not(:last-child) {
     margin-bottom: 8px;
   }
+
+  ${props =>
+    props.isErrored &&
+    css`
+      border: 1px solid #ef9a9a;
+
+      svg {
+        color: #b71c1c;
+      }
+    `}
 
   input {
     background: #eee;

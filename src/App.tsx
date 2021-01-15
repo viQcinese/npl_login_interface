@@ -1,29 +1,31 @@
 import React, { useCallback, useState } from 'react';
-import * as Yup from 'yup';
-
 import { FiMail, FiLock } from 'react-icons/fi';
+import Validate from './utils/validate';
+
 import Input from './components/Input';
 import Button from './components/Button';
 
 import { Container, Form, GlobalStyle } from './styles';
+import mockLogin from './services/login';
 
 const App: React.FC = () => {
   const [email, setEmail] = useState('');
+  const [emailError, setEmailError] = useState(false);
   const [password, setPassword] = useState('');
+  const [passwordError, setPasswordError] = useState(false);
 
   const handleSubmit = useCallback(
     async event => {
       event.preventDefault();
-      try {
-        const data = { email, password };
-        const schema = Yup.object().shape({
-          email: Yup.string()
-            .required('You have to enter an email')
-            .email('You have to enter a valid email'),
-          password: Yup.string().required('You have to enter a password'),
-        });
-      } catch (err) {
-        console.log(err);
+
+      const isEmailValid = Validate.email(email);
+      const isPasswordValid = Validate.password(password);
+
+      setEmailError(!isEmailValid);
+      setPasswordError(!isPasswordValid);
+
+      if (isEmailValid && isPasswordValid) {
+        await mockLogin({ email, password });
       }
     },
     [email, password],
@@ -33,7 +35,7 @@ const App: React.FC = () => {
     <>
       <GlobalStyle />
       <Container>
-        <Form autoComplete="off" onSubmit={handleSubmit}>
+        <Form autoComplete="off" onSubmit={handleSubmit} noValidate>
           <h1>Login</h1>
           <Input
             name="email"
@@ -42,6 +44,7 @@ const App: React.FC = () => {
             icon={FiMail}
             value={email}
             onChange={e => setEmail(e.target.value)}
+            isErrored={emailError}
           />
           <Input
             name="password"
@@ -50,6 +53,7 @@ const App: React.FC = () => {
             icon={FiLock}
             value={password}
             onChange={e => setPassword(e.target.value)}
+            isErrored={passwordError}
           />
 
           <Button>Submit</Button>
